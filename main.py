@@ -4,8 +4,10 @@ from discord.ext import commands
 import google.generativeai as genai
 import asyncio
 
+
 genai_token = os.environ['genai_token']
 DiscordToken = os.environ['DiscordToken']
+GIFAPI = os.environ['GIFAPI']
 
 leaderboard = {}
 responses = {}
@@ -52,6 +54,7 @@ async def on_message(message):
 
   if message.content.startswith('!quiz'):
 
+
     responses.clear()
     topic = message.content[6:]
     convo.send_message(f"Generate an MCQ question on the topic {topic} with only 4 options")
@@ -62,8 +65,8 @@ async def on_message(message):
     correct_option = answer[0]
     correct_option = correct_option.lower()
     print(correct_option)
-    await message.channel.send("You have 30 seconds to answer this, good luck!")
-    await asyncio.sleep(30)
+    await message.channel.send("You have 20 seconds to answer this, good luck!")
+    await asyncio.sleep(20)
     await message.channel.send(f"The correct option is : {answer}")
 
     if correct_option not in responses.values():
@@ -75,13 +78,14 @@ async def on_message(message):
       position = val_list.index(correct_option)
       winner = key_list[position]
       await message.channel.send(f"\n**Congratulations {winner}! You got the right answer!**:tada:")
-        
+      leaderboard.update({winner : leaderboard.get(winner, 0) + 1})
     
     
-  
+  if message.content.startswith('!leaderboard'):
+    await message.channel.send("**Leaderboard:**")
+    await message.channel.send(leaderboard)
+    
+
 bot.run(DiscordToken)
-    
-
-
 
   
