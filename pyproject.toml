@@ -10,6 +10,7 @@ packages = [{include = "repl_nix_light_photons_of_sound"}]
 python = "^3.10"
 discord-py = "^2.3.2"
 openai = "^1.23.1"
+google-generativeai = "^0.5.2"
 
 
 [build-system]
