@@ -123,7 +123,8 @@ async def on_message(message):
     
   if message.content.startswith('!leaderboard'):
     sorted_dict = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
-    await message.channel.send("\t\t\t***LEADERBOARD***\n" + leaderboard)
+    await message.channel.send("\t\t\t***LEADERBOARD***")
+    await message.channel.send(leaderboard)
 
   if message.content.startswith('!translate'):
 
