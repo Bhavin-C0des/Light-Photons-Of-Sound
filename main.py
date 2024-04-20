@@ -122,7 +122,7 @@ async def on_message(message):
         await message.channel.send("https://giphy.com/gifs/Friends-episode-1-season-9-friends-tv-mGK1g88HZRa2FlKGbz")
     
   if message.content.startswith('!leaderboard'):
-    sorted_dict = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True
+    sorted_dict = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
     await message.channel.send("\t\t\t***LEADERBOARD***\n" + leaderboard)
 
   if message.content.startswith('!translate'):
