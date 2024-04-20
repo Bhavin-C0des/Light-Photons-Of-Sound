@@ -126,6 +126,17 @@ async def on_message(message):
     await message.channel.send("**Leaderboard:**")
     await message.channel.send(leaderboard)
 
+  if message.content.startswith('!translate'):
+
+    mssg = message.content
+    language = mssg.split()[1]
+    lang_index = mssg.find(language)
+    text = mssg[lang_index+len(language)+1:]
+    
+    convo.send_message(f"Translate the : {text} into the language {language}. After giving the text, in brackets add the pronounciation of the text")
+    translation = convo.last.text
+    await message.channel.send(translation)
+                       
   if message.content.startswith('!news'):
      
     query_params = {
