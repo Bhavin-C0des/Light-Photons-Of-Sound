@@ -5,12 +5,11 @@ import google.generativeai as genai
 import asyncio
 import random
 import requests
-
+import tabulate
 
 
 genai_token = os.environ['genai_token']
 DiscordToken = os.environ['DiscordToken']
-#GIFAPI = os.environ['GIFAPI']
 
 leaderboard = {}
 responses = {}
@@ -67,7 +66,7 @@ async def on_message(message):
 
     responses.clear()
     topic = message.content[6:]
-    convo.send_message(f"Generate an MCQ question on the topic {topic} with only 4 options")
+    convo.send_message(f"Generate an MCQ question on the topic {topic} with only 4 options. Don't repeat the same question too many times.")
     question = convo.last.text
     await message.channel.send(question)
     convo.send_message(f"which is the correct option(just say A, B, C or D)?\n{question}. Do not bold it. After you state the correct option, briefly explain the answer.")
@@ -123,8 +122,8 @@ async def on_message(message):
         await message.channel.send("https://giphy.com/gifs/Friends-episode-1-season-9-friends-tv-mGK1g88HZRa2FlKGbz")
     
   if message.content.startswith('!leaderboard'):
-    await message.channel.send("**Leaderboard:**")
-    await message.channel.send(leaderboard)
+    sorted_dict = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True
+    await message.channel.send("\t\t\t***LEADERBOARD***\n" + leaderboard)
 
   if message.content.startswith('!translate'):
 
@@ -163,7 +162,8 @@ async def on_message(message):
         await message.channel.send(f"{i + 1}. {results[i]}")
  
 
-    
+  if message.content.startswith('!help') :
+    await message.channel.send("**Commands:**\n!ask <question> - asks Google's AI (Gemini) \n!quiz <topic> - asks Gemini to generate a multiple choice question on the topic \n!answer<option> Answer the question that Gemini asked you, compete with your friends, first one to answer gets a point! \n!leaderboard - shows the leaderboard\n!translate <language> <text> - translates the text into the language you specify\n!news - shows the top headlines from BBC news") 
 
 bot.run(DiscordToken)
 
