@@ -123,8 +123,9 @@ async def on_message(message):
     
   if message.content.startswith('!leaderboard'):
     sorted_dict = sorted(leaderboard.items(), key=lambda x: x[1], reverse=True)
+    final_leaderboard = tabulate.tabulate(sorted_dict, headers=["Name", "Score"], tablefmt="simple")
     await message.channel.send("\t\t\t***LEADERBOARD***")
-    await message.channel.send(leaderboard)
+    await message.channel.send(final_leaderboard)
 
   if message.content.startswith('!translate'):
 
